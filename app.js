@@ -433,6 +433,7 @@
   const btnPlayPause = document.getElementById('btnPlayPause');
   const btnRestart = document.getElementById('btnRestart');
   const giftToast = document.getElementById('giftToast');
+  const treePrompt = document.getElementById('treePrompt');
   let toastTimer = 0;
 
   // --- High-Density Monospace Grid ---
@@ -597,6 +598,7 @@
     hoveredGiftId = -1;
     canvas.classList.remove('clickable');
     giftToast.classList.remove('visible');
+    if (treePrompt) treePrompt.classList.remove('visible');
     spawnGiftBurst(SECRET_GIFT.cx, -0.1, SECRET_GIFT.cz, [255, 224, 96]);
     spawnGiftBurst(SECRET_GIFT.cx, -0.04, SECRET_GIFT.cz, [255, 110, 180]);
     if (window.SecretFinale) {
@@ -613,6 +615,7 @@
     if (openedCount === GIFT_SPECS.length && !SECRET_GIFT.unlocked) {
       SECRET_GIFT.unlocked = true;
       SECRET_GIFT.appearAnim = 0;
+      if (treePrompt) treePrompt.textContent = 'Abra seu presente secreto ✦';
       spawnGiftBurst(SECRET_GIFT.cx, -0.12, SECRET_GIFT.cz, [255, 224, 96]);
       showToast('✦ Todos os 7 BT21 abertos! Um presente secreto apareceu!', SECRET_GIFT.accent, 4200);
     } else {
@@ -667,6 +670,10 @@
     SECRET_GIFT.unlocked = false;
     SECRET_GIFT.opened = false;
     SECRET_GIFT.appearAnim = 0;
+    if (treePrompt) {
+      treePrompt.textContent = 'Abra seus presentes';
+      treePrompt.classList.remove('visible');
+    }
     burstParticles.length = 0;
     if (window.SecretFinale) {
       window.SecretFinale.reset();
@@ -730,6 +737,11 @@
     const pOrn = ramp(t, T_ORN[0], T_ORN[1]);
     const pStar = ease(ramp(t, T_STAR[0], T_STAR[1]));
     const pGift = ramp(t, T_GIFT[0], T_GIFT[1]);
+
+    // Show "Abra seus presentes" cleanly above the tree once the gifts appear
+    if (treePrompt && !SECRET_GIFT.opened && pGift > 0.15 && !treePrompt.classList.contains('visible')) {
+      treePrompt.classList.add('visible');
+    }
 
     // 1. Ground
     if (pGround > 0.01) {
