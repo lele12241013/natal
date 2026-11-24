@@ -502,9 +502,10 @@
 
     const minDim = Math.min(canvasW, canvasH);
     const isPortrait = canvasW < canvasH;
-    const pxScale = (minDim * (isPortrait ? 1.32 : 1.48)) / depth;
-    const px = canvasW * 0.5 + rx * pxScale;
-    const py = canvasH * (isPortrait ? 0.5 : 0.48) - ty * pxScale;
+    const pxScaleX = (minDim * (isPortrait ? 1.58 : 1.48)) / depth;
+    const pxScaleY = isPortrait ? pxScaleX * 1.24 : pxScaleX;
+    const px = canvasW * 0.5 + rx * pxScaleX;
+    const py = canvasH * (isPortrait ? 0.52 : 0.48) - ty * pxScaleY;
 
     const col = Math.floor(px / cellW);
     const row = Math.floor(py / cellH);

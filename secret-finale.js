@@ -125,10 +125,10 @@
 
     // Converging stardust particles forming the couple line-art
     const isPortrait = w < h;
-    const artSpan = isPortrait ? minDim * 0.86 : minDim * 0.68;
+    const artSpan = isPortrait ? minDim * 0.96 : minDim * 0.68;
     const centerX = w * 0.5;
-    const centerY = h * (isPortrait ? 0.56 : 0.57);
-    const sizeScale = minDim < 500 ? 0.82 : 1.0;
+    const centerY = h * (isPortrait ? 0.54 : 0.57);
+    const sizeScale = minDim < 500 ? 0.95 : 1.0;
 
     ctx.save();
     for (let i = 0; i < particles.length; i++) {
